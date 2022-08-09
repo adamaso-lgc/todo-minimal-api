@@ -21,13 +21,13 @@ namespace Todo.Api.Repositories
     {
         using var connection = await _connectionFactory.CreateConnectionAsync();
         var result = await connection.ExecuteAsync(
-            @"INSERT INTO TODO (Title, Note, Done, LimitDate, Priority, CreatedDate, LastModifiedDate)
-            VALUES (@Title, @Note, @Done, @LimitDate, @Priority, @CreatedDate, @LastModifiedDate)",
+            @"INSERT INTO TODO (TodoId, Title, Note, Done, LimitDate, Priority, CreatedDate, LastModifiedDate)
+            VALUES (@Id, @Title, @Note, @Done, @LimitDate, @Priority, @CreatedDate, @LastModifiedDate)",
             todo);
         return result > 0;
     }
 
-    public Task<bool> DeleteAsync(int id)
+    public Task<bool> DeleteAsync(Guid id)
     {
       throw new NotImplementedException();
     }
@@ -37,9 +37,11 @@ namespace Todo.Api.Repositories
       throw new NotImplementedException();
     }
 
-    public Task<TodoItem?> GetAsync(int id)
+    public async Task<TodoItem?> GetAsync(Guid id)
     {
-      throw new NotImplementedException();
+      using var connection = await _connectionFactory.CreateConnectionAsync();
+        return await connection.QuerySingleOrDefaultAsync<TodoItem>(
+            "SELECT * FROM Todo WHERE TodoId = @Id ", new { Id = id.ToString()});
     }
 
     public Task<bool> UpdateAsync(TodoItem customer)

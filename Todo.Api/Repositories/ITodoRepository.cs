@@ -9,9 +9,9 @@ namespace Todo.Api.Repositories
     public interface ITodoRepository
     {
         Task<bool> CreateAsync(TodoItem todo);
-        Task<TodoItem?> GetAsync(int id);
+        Task<TodoItem?> GetAsync(Guid id);
         Task<IEnumerable<TodoItem>> GetAllAsync();
         Task<bool> UpdateAsync(TodoItem customer);
-        Task<bool> DeleteAsync(int id);
+        Task<bool> DeleteAsync(Guid id);
     }
 }

@@ -8,11 +8,11 @@ namespace Todo.Api.Database
         public Task<IDbConnection> CreateConnectionAsync();
     }
 
-    public class SqliteConnectionFactory : IDbConnectionFactory
+    public class SqlConnectionFactory : IDbConnectionFactory
     {
         private readonly string _connectionString;
 
-        public SqliteConnectionFactory(string connectionString)
+        public SqlConnectionFactory(string connectionString)
         {
             _connectionString = connectionString;
         }

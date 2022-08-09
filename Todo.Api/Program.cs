@@ -11,7 +11,7 @@ builder.Services.AddFastEndpoints();
 builder.Services.AddSwaggerDoc();
 
 builder.Services.AddSingleton<IDbConnectionFactory>(_ =>
-    new SqliteConnectionFactory(config.GetConnectionString("ConnectionString")));
+    new SqlConnectionFactory(config.GetConnectionString("ConnectionString")));
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 
 var app = builder.Build();
@@ -34,3 +34,8 @@ app.UseOpenApi();
 app.UseSwaggerUi3(s => s.ConfigureDefaults());
 
 app.Run();
+
+public partial class Program
+{
+    // Expose the Program class for use with WebApplicationFactory<T>
+}

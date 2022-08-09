@@ -13,7 +13,7 @@ namespace Todo.Api.Endpoints.CreateTodo
         {
             Summary = "Creates a new todo in the system";
             Description = "Creates a new todo in the system";
-            Response<int>(201, "Todo was successfully created");
+            Response<Guid>(201, "Todo was successfully created");
             Response<ValidationFailureResponse>(400, "The request did not pass validation checks");
         }
     }

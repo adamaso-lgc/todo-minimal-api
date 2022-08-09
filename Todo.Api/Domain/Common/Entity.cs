@@ -8,13 +8,13 @@ namespace Todo.Domain.Common
 {
     public abstract class Entity
     {
-        public int Id { get; protected set; }
-        public DateTime CreatedDate { get; set; }
+        public Guid Id { get; init; } = Guid.NewGuid();
+        public DateTime CreatedDate { get; init; } = DateTime.Now;
         public DateTime? LastModifiedDate { get; set; }
 
-        public Entity()
-        {
-            CreatedDate = DateTime.Now;
-        }
+        // public Entity()
+        // {
+        //     CreatedDate = DateTime.Now;
+        // }
     }
 }

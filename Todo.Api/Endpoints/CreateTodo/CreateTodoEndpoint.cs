@@ -11,7 +11,7 @@ using Todo.Domain.Entities;
 namespace Todo.Api.Endpoints.CreateTodo
 {
     [HttpPost("todo"), AllowAnonymous]
-    public class CreateTodoEndpoint : Endpoint<CreateTodoRequest, int>
+    public class CreateTodoEndpoint : Endpoint<CreateTodoRequest, Guid>
     {
         private readonly ITodoRepository _todoRepository;
 
@@ -29,10 +29,10 @@ namespace Todo.Api.Endpoints.CreateTodo
                 Done = false,
                 LimitDate = req.LimitDate
             };
-
+    
             await _todoRepository.CreateAsync(todo);
 
-            await SendCreatedAtAsync<GetTodoEndpoint>(todo.Id, todo.Id, generateAbsoluteUrl: true, cancellation: ct);
+            await SendCreatedAtAsync<GetTodoEndpoint>(new { Id = todo.Id }, todo.Id, generateAbsoluteUrl: true, cancellation: ct);
         }       
 
     }

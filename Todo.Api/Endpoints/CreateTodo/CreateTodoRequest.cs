@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
+using Todo.Domain.Enums;
 
 namespace Todo.Api.Endpoints.CreateTodo
 {
@@ -10,6 +11,7 @@ namespace Todo.Api.Endpoints.CreateTodo
     {
         public string Title { get; set; }
         public string Note { get; set; }
+        public PriorityLevel Priority { get; set; }
         public DateTime LimitDate { get; set; }
 
         public class CreateTodoCommandValidator : AbstractValidator<CreateTodoRequest>

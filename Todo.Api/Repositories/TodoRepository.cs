@@ -44,7 +44,7 @@ namespace Todo.Api.Repositories
             "SELECT * FROM Todo WHERE TodoId = @Id ", new { Id = id.ToString()});
     }
 
-    public Task<bool> UpdateAsync(TodoItem customer)
+    public Task<bool> UpdateAsync(TodoItem todo)
     {
       throw new NotImplementedException();
     }

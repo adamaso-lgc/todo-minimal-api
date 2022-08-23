@@ -11,7 +11,7 @@ namespace Todo.Api.Repositories
         Task<bool> CreateAsync(TodoItem todo);
         Task<TodoItem?> GetAsync(Guid id);
         Task<IEnumerable<TodoItem>> GetAllAsync();
-        Task<bool> UpdateAsync(TodoItem customer);
+        Task<bool> UpdateAsync(TodoItem todo);
         Task<bool> DeleteAsync(Guid id);
     }
 }

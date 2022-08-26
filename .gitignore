@@ -262,3 +262,5 @@ __pycache__/
 /obj/
 *.db
 .DS_Store
+
+data/*

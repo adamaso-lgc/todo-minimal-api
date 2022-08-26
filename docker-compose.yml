@@ -1,6 +1,19 @@
 version: '3.9'
 
 services:
+  
+  sqldata:
+    build:
+      context: .
+      dockerfile: Db/Dockerfile
+    ports:
+      - "1450:1433"
+    environment:
+      SA_PASSWORD: "a12345678?"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+  
   todo-minimal-api:
     image: ${DOCKER_REGISTRY-}todo-minimal:1.0.0
     build:
@@ -13,12 +26,6 @@ services:
     depends_on:
       - sqldata
 
-  sqldata:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    environment:
-      SA_PASSWORD: "a12345678?"
-      ACCEPT_EULA: "Y"
-    volumes:
-      - /home/andre/DB/mssql:/var/opt/mssql/data
-    ports:
-      - "1450:1433"
+
+volumes:
+  sqlserver_data:

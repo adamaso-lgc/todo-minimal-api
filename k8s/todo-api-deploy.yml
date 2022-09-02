@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-api-deployment
+spec:
+  selector:
+    matchLabels:
+      app: todo-api
+  template:
+    metadata:
+      labels:
+        app: todo-api
+    spec:
+      containers:
+      - name: todo-api
+        image: andredamaso/todo-minimal-api:1.0
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
+        ports:
+        - containerPort: 80
+        env:
+          - name: ConnectionStrings__ConnectionString
+            value: "Server=todo-sqldata-service;Database=TodoMinimal;User ID=sa;Password=a12345678?"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-api-service
+spec:
+  selector:
+    app: todo-api
+  ports:
+  - port: 8085
+    targetPort: 80
+    # protocol: TCP
+  type: LoadBalancer
+

@@ -1,0 +1,68 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: todo-sqldata-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-sqldata-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-sqldata
+  template:
+    metadata:
+      labels:
+        app: todo-sqldata
+    spec:
+      containers:
+      - name: todo-sqldata
+        image: andredamaso/todo-minimal-sqldata:1.0
+        resources:
+          requests:
+            memory: "2G"
+            cpu: "2000m"
+          limits:
+            memory: "2G"
+            cpu: "2000m"
+        ports:
+        - containerPort: 1433
+        env:
+          - name: MSSQL_PID
+            value: "Developer"
+          - name: ACCEPT_EULA
+            value: "Y"
+          - name: MSSQL_SA_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mssql-secret
+                key: SA_PASSWORD 
+        volumeMounts:
+        - name: todo-sqldata-storage
+          mountPath: /var/opt/mssql
+      volumes:
+      - name: todo-sqldata-storage
+        persistentVolumeClaim:
+          claimName: todo-sqldata-claim
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-sqldata-service
+spec:
+  selector:
+    app: todo-sqldata
+  ports:
+    - protocol: TCP
+      port: 1433
+      targetPort: 1433
+  type: NodePort
